@@ -29,6 +29,7 @@ const PostShare = () => {
           <div
             className="option"
             style={{ color: 'var(--photo)' }}
+            // THANKS TO THE USEREF I CAN CALL THE INPUT AT THE END OF THE CODE
             onClick={() => imageRef.current.click()}
           >
             <UilScenery />
