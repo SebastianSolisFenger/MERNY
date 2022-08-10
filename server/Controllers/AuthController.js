@@ -24,3 +24,27 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// LOGIN A USER
+
+export const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // find the user
+    const user = await UserModel.findOne({ username: username });
+
+    // validate password
+    if (user) {
+      const validity = await bcrypt.compare(password, user.password);
+
+      validity
+        ? res.status(200).json(user)
+        : res.status(400).json({ message: 'Invalid Password' });
+    } else {
+      res.status(404).json({ message: 'Invalid Username' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
