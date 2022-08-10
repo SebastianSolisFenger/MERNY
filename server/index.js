@@ -7,12 +7,14 @@ import mongoose from 'mongoose';
 
 import dotenv from 'dotenv';
 
-// FINISH IMPORTS
+// import the routes
+import authRoute from './Routes/AuthRoute.js';
 
 // EXPRESS
 
 const app = express();
 
+// MIDDLEWARE
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
@@ -33,3 +35,6 @@ mongoose
     )
   )
   .catch((err) => console.log(err));
+
+// Usage of routes
+app.use('/auth', authRoute);
