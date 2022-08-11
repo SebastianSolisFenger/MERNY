@@ -89,6 +89,13 @@ export const likePost = async (req, res) => {
         },
       });
       res.status(200).json('Post liked successfully');
+    } else {
+      await post?.updateOne({
+        $pull: {
+          likes: userId,
+        },
+      });
+      res.status(200).json('Post unliked successfully');
     }
   } catch (error) {
     res.status(500).json(error);
