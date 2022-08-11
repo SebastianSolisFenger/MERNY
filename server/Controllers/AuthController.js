@@ -34,7 +34,7 @@ export const loginUser = async (req, res) => {
     // find the user
     const user = await UserModel.findOne({ username: username });
 
-    // validate password
+    //  if the user is right, then validate password (but first you need to decrypt it/compare it)
     if (user) {
       const validity = await bcrypt.compare(password, user.password);
 
