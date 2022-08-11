@@ -1,4 +1,5 @@
 import PostModel from '../Models/postModel.js';
+import UserModel from '../Models/userModel.js';
 import mongoose from 'mongoose';
 
 // CRUD - Create Read Update Delete
@@ -97,6 +98,48 @@ export const likePost = async (req, res) => {
       });
       res.status(200).json('Post unliked successfully');
     }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+// ------------------ Get TimeLine posts  ------------------//
+
+export const getTimeLinePosts = async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const currentUserPosts = await PostModel.find({ userId: userId });
+
+    // aggregate is pretty much an ARRAY OF STEPS... FOR EXAMPLE THE $match IS A STEP
+
+    const followingPosts = await UserModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        // I am placing the query on USERMODEL and I want to get the results from the POSTMODEL
+        $lookup: {
+          //  from: 'posts', => this is the collection name on MONGOOSE
+          from: 'posts',
+
+          // localField: 'following', => this is the field name on USERMODEL
+          localField: 'following',
+          foreignField: 'userId',
+          as: 'followingPosts',
+        },
+      },
+      {
+        // $project => which fiels you want to return as result of agregation
+        $project: {
+          followingPosts: 1,
+          _id: 0,
+        },
+      },
+    ]);
+    res.status(200).json(currentUserPosts.concat(followingPosts));
   } catch (error) {
     res.status(500).json(error);
   }
