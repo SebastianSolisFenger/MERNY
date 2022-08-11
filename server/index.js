@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 
 // import the routes
 import authRoute from './Routes/AuthRoute.js';
+import userRoute from './Routes/UserRoute.js';
 
 // EXPRESS
 
@@ -38,3 +39,4 @@ mongoose
 
 // Usage of routes
 app.use('/auth', authRoute);
+app.use('/user', userRoute);
