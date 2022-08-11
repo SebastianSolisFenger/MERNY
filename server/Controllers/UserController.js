@@ -53,27 +53,22 @@ export const updateUser = async (req, res) => {
   }
 };
 
-// update a user
-// export const updateUser = async (req, res) => {
-//   const id = req.params.id;
-//   const { currentUserId, currentUserAdminStatus, password } = req.body;
+// Delete a User
 
-//   if (id === currentUserId || currentUserAdminStatus) {
-//     try {
-//       if (password) {
-//         const salt = await bcrypt.genSalt(10);
-//         req.body.password = await bcrypt.hash(password, salt);
-//       }
+export const deleteUser = async (req, res) => {
+  const id = req.params.id;
 
-//       const user = await UserModel.findByIdAndUpdate(id, req.body, {
-//         new: true,
-//       });
+  const { currentUserId, currentUserAdminStatus } = req.body;
 
-//       res.status(200).json(user);
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   } else {
-//     res.status(403).json('Access Denied! you can only update your own profile');
-//   }
-// };
+  // ir the user to be modified is the current user or if the current user is an admin
+  if (id === currentUserId || currentUserAdminStatus) {
+    try {
+      const user = await UserModel.findByIdAndDelete(id);
+      res.status(200).json('User deleted successfully');
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res.status(403).json('Access Denied! you can only delete your own profile');
+  }
+};
