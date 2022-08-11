@@ -8,8 +8,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 // import the routes
-import authRoute from './Routes/AuthRoute.js';
-import userRoute from './Routes/UserRoute.js';
+import AuthRoute from './Routes/AuthRoute.js';
+import UserRoute from './Routes/UserRoute.js';
+import PostRoute from './Routes/PostRoute.js';
 
 // EXPRESS
 
@@ -38,5 +39,6 @@ mongoose
   .catch((err) => console.log(err));
 
 // Usage of routes
-app.use('/auth', authRoute);
-app.use('/user', userRoute);
+app.use('/auth', AuthRoute);
+app.use('/user', UserRoute);
+app.use('/post', PostRoute);

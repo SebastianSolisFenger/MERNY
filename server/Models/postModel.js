@@ -1,14 +1,35 @@
-import mongoos from 'mongoose';
+// @ts-nocheck
+// import mongoose from 'mongoose';
 
-const postSchema = new mongoos.Model(
+// const postSchema = new mongoose.Model(
+//   {
+//     userId: {
+//       type: String,
+//       required: true,
+//     },
+//     desc: String,
+//     likes: [],
+//     image: String,
+//   },
+//   { timestamps: true }
+// );
+
+// const PostModel = mongoose.model('Posts', postSchema);
+// export default PostModel;
+
+import mongoose from 'mongoose';
+
+const postSchema = mongoose.Schema(
   {
-    userId: {
-      type: String,
-      required: true,
-    },
+    userId: { type: String, required: true },
     desc: String,
     likes: [],
     image: String,
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
+
+var PostModel = mongoose.model('Posts', postSchema);
+export default PostModel;
