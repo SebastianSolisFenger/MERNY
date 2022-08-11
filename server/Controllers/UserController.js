@@ -10,7 +10,10 @@ export const getUser = async (req, res) => {
     const user = await UserModel.findById(id);
 
     if (user) {
-      res.status(200).json(user);
+      // SEND USER WITHOUT PASSWORD
+      const { password, ...otherDetails } = user._doc;
+
+      res.status(200).json(otherDetails);
     }
   } catch (error) {
     res.status(500).json(error);
