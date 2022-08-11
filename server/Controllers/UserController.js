@@ -72,3 +72,49 @@ export const deleteUser = async (req, res) => {
     res.status(403).json('Access Denied! you can only delete your own profile');
   }
 };
+
+// Follow a user
+
+export const followUser = async (req, res) => {
+  // User who should be followd
+  const id = req.params.id;
+
+  // User who wants to follow
+  const { currentUserId } = req.body;
+
+  if (currentUserId === id) {
+    res.status(403).json('You cannot follow yourself');
+  } else {
+    try {
+      // User that we want to follow
+
+      const followUser = await UserModel.findById(id);
+
+      // Now it's for the user who want to follow the previous found user
+      const followingUser = await UserModel.findById(currentUserId);
+
+      // Check if the user is already following the user, then push the currentUserId to his/her followers
+      if (!followUser.followers.includes(currentUserId)) {
+        await followUser.updateOne({
+          $push: {
+            followers: currentUserId,
+          },
+        });
+
+        // update the following array of currentUserId
+
+        await followingUser.updateOne({
+          $push: {
+            following: id,
+          },
+        });
+        // --
+        res.status(200).json('User followed successfully');
+      } else {
+        res.status(403).json('You are already following this user');
+      }
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+};
