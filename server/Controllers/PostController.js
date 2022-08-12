@@ -118,6 +118,7 @@ export const getTimelinePosts = async (req, res) => {
         },
       },
       {
+        // As far as I understand, this is the way to concat the post of the following users
         $lookup: {
           from: 'posts',
           localField: 'following',
