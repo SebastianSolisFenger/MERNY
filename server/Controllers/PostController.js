@@ -136,6 +136,8 @@ export const getTimelinePosts = async (req, res) => {
     res.status(200).json(
       currentUserPosts
         .concat(...followingPosts[0].followingPosts)
+
+        // latest post will appear first in the timeline
         .sort((a, b) => {
           return b.createdAt - a.createdAt;
         })
