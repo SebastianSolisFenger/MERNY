@@ -3,6 +3,48 @@ import './Auth.css';
 import Logo from '../../img/logo.png';
 
 const Auth = () => {
+  // IF SIGNUP IS FALSE THEN WE ARE RENDERING THE LOGIN PAGE
+  const [isSignUp, setIsSignUp] = React.useState(true);
+
+  // DATA of the form
+  const [data, setData] = React.useState({
+    firstname: '',
+    lastname: '',
+    password: '',
+    confirmpass: '',
+    username: '',
+  });
+
+  // CONFIRM PASSWORD VALIDATION
+  const [confirmPass, setConfirmPass] = React.useState(true);
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // HANDLE SUBMIT
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      if (data.password !== data.confirmpass) setConfirmPass(false);
+    }
+  };
+
+  // reset form so it doesnt show the message when cliking on login
+  const resetForm = () => {
+    setConfirmPass(true);
+    setData({
+      firstname: '',
+      lastname: '',
+      password: '',
+      confirmpass: '',
+      username: '',
+    });
+  };
+
   return (
     <div className="Auth">
       {/* LEFT SIDE  */}
@@ -18,23 +60,27 @@ const Auth = () => {
 
       {/* RIGHT SIDE  */}
       <div className="a-right">
-        <form className="infoForm authForm">
-          <h3>Sign up</h3>
+        <form className="infoForm authForm" onSubmit={handleSubmit}>
+          <h3>{isSignUp ? 'Sign up' : 'Log In'}</h3>
 
-          <div>
-            <input
-              type="text"
-              placeholder="First Name"
-              className="infoInput"
-              name="firstname"
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="infoInput"
-              name="lastname"
-            />
-          </div>
+          {isSignUp && (
+            <div>
+              <input
+                type="text"
+                placeholder="First Name"
+                className="infoInput"
+                name="firstname"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="infoInput"
+                name="lastname"
+                onChange={handleChange}
+              />
+            </div>
+          )}
 
           <div>
             <input
@@ -42,31 +88,57 @@ const Auth = () => {
               className="infoInput"
               name="username"
               placeholder="Usernames"
+              onChange={handleChange}
             />
           </div>
 
           <div>
             <input
-              type="text"
+              type="password"
               className="infoInput"
               name="password"
               placeholder="Password"
+              onChange={handleChange}
             />
-            <input
-              type="text"
-              className="infoInput"
-              name="confirmpass"
-              placeholder="Confirm Password"
-            />
+
+            {isSignUp && (
+              <input
+                type="password"
+                className="infoInput"
+                name="confirmpass"
+                placeholder="Confirm Password"
+                onChange={handleChange}
+              />
+            )}
           </div>
 
+          <span
+            style={{
+              display: confirmPass ? 'none' : 'block',
+              color: 'red',
+              fontSize: '12px',
+              alignSelf: 'flex-end',
+              marginRight: '5px',
+            }}
+          >
+            * Confirm password is not the same
+          </span>
+
           <div>
-            <span style={{ fontSize: '12px' }}>
-              Already have an account. Login!
+            <span
+              style={{ fontSize: '12px', cursor: 'pointer' }}
+              onClick={() => {
+                setIsSignUp((prev) => !prev);
+                resetForm();
+              }}
+            >
+              {isSignUp
+                ? 'Already have an account?, Login!'
+                : "Don't have an account?, Sign up!"}
             </span>
           </div>
           <button className="button infoButton" type="submit">
-            Signup
+            {isSignUp ? 'Sign Up' : 'Log In'}
           </button>
         </form>
       </div>
