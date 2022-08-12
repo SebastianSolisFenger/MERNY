@@ -3,7 +3,7 @@ import * as AuthApi from '../api/AuthRequest';
 // LOGIN ACTION
 
 export const logIn = (formData) => async (dispatch) => {
-  dispatch({ type: 'LOGIN_START' });
+  dispatch({ type: 'AUTH_START' });
 
   try {
     const { data } = await AuthApi.logIn(formData);
@@ -17,7 +17,7 @@ export const logIn = (formData) => async (dispatch) => {
 // SIGNUP ACTION
 
 export const signUp = (formData) => async (dispatch) => {
-  dispatch({ type: 'SIGNUP_START' });
+  dispatch({ type: 'AUTH_START' });
 
   try {
     const { data } = await AuthApi.signUp(formData);
