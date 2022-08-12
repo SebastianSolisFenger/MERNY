@@ -3,16 +3,17 @@ import './Auth.css';
 import Logo from '../../img/logo.png';
 import { useDispatch } from 'react-redux';
 import { logIn, signUp } from '../../actions/AuthAction';
+import { useState } from 'react';
 
 const Auth = () => {
   // IF SIGNUP IS FALSE THEN WE ARE RENDERING THE LOGIN PAGE
-  const [isSignUp, setIsSignUp] = React.useState(true);
+  const [isSignUp, setIsSignUp] = useState(true);
 
   // IMPORT DISPATCH FROM REACT-REDUX
   const dispatch = useDispatch();
 
   // DATA of the form
-  const [data, setData] = React.useState({
+  const [data, setData] = useState({
     firstname: '',
     lastname: '',
     password: '',
@@ -21,7 +22,7 @@ const Auth = () => {
   });
 
   // CONFIRM PASSWORD VALIDATION
-  const [confirmPass, setConfirmPass] = React.useState(true);
+  const [confirmPass, setConfirmPass] = useState(true);
 
   const handleChange = (e) => {
     setData({
@@ -32,10 +33,11 @@ const Auth = () => {
 
   // HANDLE SUBMIT
   const handleSubmit = (e) => {
+    setConfirmPass(true);
     e.preventDefault();
     if (isSignUp) {
       // if (data.password !== data.confirmpass) setConfirmPass(false);
-      data.password !== data.confirmpass
+      data.password === data.confirmpass
         ? dispatch(signUp(data))
         : setConfirmPass(false);
     } else {
