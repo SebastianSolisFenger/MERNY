@@ -23,7 +23,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
-// CORS
+// CORS to avoid some errors that may occur when connection 5000 port(BACK) with 3000 port (FRONT)
 
 app.use(cors());
 
