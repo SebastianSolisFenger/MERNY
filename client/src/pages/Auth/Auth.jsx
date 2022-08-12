@@ -36,7 +36,6 @@ const Auth = () => {
     setConfirmPass(true);
     e.preventDefault();
     if (isSignUp) {
-      // if (data.password !== data.confirmpass) setConfirmPass(false);
       data.password === data.confirmpass
         ? dispatch(signUp(data))
         : setConfirmPass(false);

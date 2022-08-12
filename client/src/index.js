@@ -1,10 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store/ReduxStore';
+import ReactDOM from 'react-dom';
+
+import App from './App';
 
 ReactDOM.render(
-  <App/>,
-  document.getElementById("root")
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
