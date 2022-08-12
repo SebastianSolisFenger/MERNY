@@ -105,14 +105,12 @@ export const likePost = async (req, res) => {
 
 // ------------------ Get TimeLine posts  ------------------//
 
-export const getTimeLinePosts = async (req, res) => {
-  const { userId } = req.body;
+// Get Timeline POsts
+export const getTimelinePosts = async (req, res) => {
+  const userId = req.params.id;
 
   try {
     const currentUserPosts = await PostModel.find({ userId: userId });
-
-    // aggregate is pretty much an ARRAY OF STEPS... FOR EXAMPLE THE $match IS A STEP
-
     const followingPosts = await UserModel.aggregate([
       {
         $match: {
@@ -120,26 +118,28 @@ export const getTimeLinePosts = async (req, res) => {
         },
       },
       {
-        // I am placing the query on USERMODEL and I want to get the results from the POSTMODEL
         $lookup: {
-          //  from: 'posts', => this is the collection name on MONGOOSE
           from: 'posts',
-
-          // localField: 'following', => this is the field name on USERMODEL
           localField: 'following',
           foreignField: 'userId',
           as: 'followingPosts',
         },
       },
       {
-        // $project => which fiels you want to return as result of agregation
         $project: {
           followingPosts: 1,
           _id: 0,
         },
       },
     ]);
-    res.status(200).json(currentUserPosts.concat(followingPosts));
+
+    res.status(200).json(
+      currentUserPosts
+        .concat(...followingPosts[0].followingPosts)
+        .sort((a, b) => {
+          return b.createdAt - a.createdAt;
+        })
+    );
   } catch (error) {
     res.status(500).json(error);
   }
