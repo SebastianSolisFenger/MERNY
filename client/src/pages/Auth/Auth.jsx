@@ -1,13 +1,18 @@
 import React from 'react';
 import './Auth.css';
 import Logo from '../../img/logo.png';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logIn, signUp } from '../../actions/AuthAction';
 import { useState } from 'react';
 
 const Auth = () => {
+  // LOADING
+  const loading = useSelector((state) => state.authReducer.loading);
+
   // IF SIGNUP IS FALSE THEN WE ARE RENDERING THE LOGIN PAGE
   const [isSignUp, setIsSignUp] = useState(true);
+  // //
+  // console.log(loading);
 
   // IMPORT DISPATCH FROM REACT-REDUX
   const dispatch = useDispatch();
