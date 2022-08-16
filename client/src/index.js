@@ -2,12 +2,17 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store/ReduxStore';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import App from './App';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <Routes>
+        <Route path="*" element={<App />} />
+      </Routes>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
