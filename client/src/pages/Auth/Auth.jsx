@@ -162,8 +162,12 @@ const Auth = () => {
                 ? 'Already have an account Login'
                 : "Don't have an account Sign up"}
             </span>
-            <button className="button infoButton" type="Submit">
-              Login
+            <button
+              className="button infoButton"
+              type="Submit"
+              disabled={loading}
+            >
+              {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Login'}
             </button>
           </div>
         </form>
