@@ -11,8 +11,6 @@ const Auth = () => {
 
   // IF SIGNUP IS FALSE THEN WE ARE RENDERING THE LOGIN PAGE
   const [isSignUp, setIsSignUp] = useState(false);
-  // //
-  // console.log(loading);
 
   // IMPORT DISPATCH FROM REACT-REDUX
   const dispatch = useDispatch();
