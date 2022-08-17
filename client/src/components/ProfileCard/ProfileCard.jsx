@@ -7,6 +7,7 @@ import './ProfileCard.css';
 
 const ProfileCard = ({ location }) => {
   const { user } = useSelector((state) => state.authReducer.authData);
+  const posts = useSelector((state) => state.postReducer.posts);
 
   // extract image from the local server
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -60,7 +61,9 @@ const ProfileCard = ({ location }) => {
               <div className="vl"></div>
 
               <div className="follow">
-                <span>3</span>
+                <span>
+                  {posts.filter((post) => post.userId === user._id).length}
+                </span>
                 <span>Posts</span>
               </div>
             </>
