@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './ProfileCard.css';
 
-const ProfileCard = () => {
+const ProfileCard = ({ location }) => {
   const { user } = useSelector((state) => state.authReducer.authData);
 
   // extract image from the local server
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const ProfilePage = false;
+  // const ProfilePage = false;
 
   return (
     <div className="ProfileCard">
@@ -55,7 +55,7 @@ const ProfileCard = () => {
             <span>Followers </span>
           </div>
 
-          {ProfilePage && (
+          {location === 'profilePage' && (
             <>
               <div className="vl"></div>
 
@@ -68,7 +68,7 @@ const ProfileCard = () => {
         </div>
         <hr />
       </div>
-      {ProfilePage ? (
+      {location === 'profilePage' ? (
         ''
       ) : (
         <span>

@@ -10,7 +10,7 @@ import React from 'react';
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
 
-  console.log(user);
+  // console.log(user);
   // const user = true;
   return (
     <div
@@ -24,6 +24,8 @@ function App() {
     >
       <div className="blur" style={{ top: '-18%', right: '0' }}></div>
       <div className="blur" style={{ top: '36%', left: '-8rem' }}></div>
+
+      {/* // ROUTES FOR THE APP */}
       <Routes>
         <Route
           path="/"
