@@ -2,6 +2,21 @@ import UserModel from '../Models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// GET ALL USERS
+export const getAllUsers = async (req, res) => {
+  try {
+    let users = await UserModel.find();
+
+    users = users.map((user) => {
+      const { password, ...otherDetails } = user._doc;
+      return otherDetails;
+    });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 // ------------------ Get a user  ------------------//
 
 export const getUser = async (req, res) => {
