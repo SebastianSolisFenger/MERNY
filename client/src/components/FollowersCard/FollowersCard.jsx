@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './FollowersCard.css';
-import { Followers } from '../../Data/FollowersData';
+// import { Followers } from '../../Data/FollowersData';
 import { getAllUser } from '../../api/UserRequest';
 import User from '../User/User';
 import { useSelector } from 'react-redux';
@@ -22,8 +22,10 @@ const FollowersCard = () => {
     <div className="FollowersCard">
       <h3>People you may know</h3>
 
-      {Followers.map((person, id) => {
-        return <User person={person} key={id} />;
+      {persons.map((person, id) => {
+        if (person._id !== user._id) {
+          return <User person={person} key={id} />;
+        }
       })}
     </div>
   );
