@@ -116,9 +116,9 @@ export const followUser = async (req, res) => {
   const id = req.params.id;
 
   // User who wants to follow another one
-  const { currentUserId } = req.body;
+  const { _id } = req.body;
 
-  if (currentUserId === id) {
+  if (_id === id) {
     res.status(403).json('You cannot follow yourself');
   } else {
     try {
@@ -126,13 +126,13 @@ export const followUser = async (req, res) => {
       const followUser = await UserModel.findById(id);
 
       // Now it's for the user who want to follow the previous found user
-      const followingUser = await UserModel.findById(currentUserId);
+      const followingUser = await UserModel.findById(_id);
 
       // Check if the user is already following the user, if not then push the currentUserId to his/her followers
-      if (!followUser.followers.includes(currentUserId)) {
+      if (!followUser.followers.includes(_id)) {
         await followUser.updateOne({
           $push: {
-            followers: currentUserId,
+            followers: _id,
           },
         });
 
@@ -161,9 +161,9 @@ export const UnFollowUser = async (req, res) => {
   const id = req.params.id;
 
   // User who wants to follow
-  const { currentUserId } = req.body;
+  const { _id } = req.body;
 
-  if (currentUserId === id) {
+  if (_id === id) {
     res.status(403).json('You cannot Unfollow yourself');
   } else {
     try {
@@ -172,13 +172,13 @@ export const UnFollowUser = async (req, res) => {
       const followUser = await UserModel.findById(id);
 
       // Now it's for the user who want to Unfollow the previous found user
-      const followingUser = await UserModel.findById(currentUserId);
+      const followingUser = await UserModel.findById(_id);
 
       // Check if the user is not following the user, then pull the currentUserId to his/her followers
-      if (followUser.followers.includes(currentUserId)) {
+      if (followUser.followers.includes(_id)) {
         await followUser.updateOne({
           $pull: {
-            followers: currentUserId,
+            followers: _id,
           },
         });
 
