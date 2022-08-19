@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { unfollowUser } from '../../actions/userAction';
+import { followUser, unfollowUser } from '../../actions/userAction';
 
 const User = ({ person }) => {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -15,7 +15,10 @@ const User = ({ person }) => {
 
   // HANLDE FOLLOW
   const handleFollow = () => {
-    dispatch(unfollowUser(person._id, user));
+    following
+      ? dispatch(unfollowUser(person._id, user))
+      : dispatch(followUser(person._id, user));
+    setFollowing((prev) => !prev);
   };
 
   return (
