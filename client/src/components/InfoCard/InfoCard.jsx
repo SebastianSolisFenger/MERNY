@@ -12,7 +12,8 @@ const InfoCard = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
   const dispatch = useDispatch();
-  // HOOK
+
+  // HOOK TO FETCH THE ID OF THE USER (who is not necesarilly the logged in user)
   const params = useParams();
 
   const profileUserId = params.id;
